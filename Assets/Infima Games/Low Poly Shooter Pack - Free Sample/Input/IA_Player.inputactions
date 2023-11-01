@@ -148,15 +148,6 @@
                     "processors": "",
                     "interactions": "Hold",
                     "initialStateCheck": false
-                },
-                {
-                    "name": "Open Door",
-                    "type": "Button",
-                    "id": "cf00213a-14c1-467c-bbad-0d8a67df5e1f",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -520,17 +511,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "Tutorial",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "e8c36190-679b-44d6-a336-fb1047b5c335",
-                    "path": "<Keyboard>/e",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Open Door",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

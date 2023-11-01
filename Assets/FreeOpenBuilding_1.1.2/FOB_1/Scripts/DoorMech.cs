@@ -20,7 +20,7 @@ public class DoorMech : MonoBehaviour
     {
         if (col.gameObject.tag == "Player")
         {
-            playerNearby = true;
+            playerNearby = true;           
         }
     }
 
@@ -29,8 +29,23 @@ public class DoorMech : MonoBehaviour
         if (col.gameObject.tag == "Player")
         {
             playerNearby = false;
+
+            if (doorBool)
+            {
+                Invoke("CloseDoor", 3f); 
+            }
         }
     }
+
+    private void CloseDoor()
+    {
+        doorBool = false;
+        Debug.Log("Player passed, door closed");
+
+    }
+
+
+   
 
     void Update()
     {
