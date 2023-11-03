@@ -11,12 +11,9 @@ public class ZombieMovement : MonoBehaviour
 
     private UnityEngine.AI.NavMeshAgent agent;
 
-    public GameObject Zombie1;
+   
 
-    public int xPos;
-    public int zPos;
-    public int ZombieCount;
-
+    
     //float timer = 0;
 
 
@@ -24,25 +21,12 @@ public class ZombieMovement : MonoBehaviour
     void Start()
     {
         agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
-        //StartCaroutine(ZombieDrop());
-       // Vector3 spawnPosition = new Vector3(0, 0, 0); 
-        //Quaternion spawnRotation = Quaternion.identity; 
+       
+      
     }
      
 
-        IEnumerator ZombieDrop()
-        {
-            while(ZombieCount < 10) 
-        {
-            //xPos = Random.range(1, 50);
-            //zPos = Random.range(1, 31);
-            Instantiate(Zombie1, new Vector3 (xPos, 43, zPos), Quaternion.identity);
-            yield return new WaitForSeconds(0.1f);
-            ZombieCount += 1;
-        }
-        }
-
-
+        
     
     // Update is called once per frame
     void Update()
