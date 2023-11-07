@@ -5,24 +5,27 @@ using UnityEngine;
 
 public class ZombieMovement : MonoBehaviour
 {
-    //float randomValue = UnityEngine.Random;
+    
 
     public Transform follow;
 
     private UnityEngine.AI.NavMeshAgent agent;
+    private bool isChasing = false;
 
-   
+    private EnemySpawning spawning;
 
     
-    //float timer = 0;
-
+   
 
     // Start is called before the first frame update
     void Start()
     {
-        agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
        
-      
+        agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
+        StartCoroutine(WaitAndStartChasing(1f));
+        spawning = GetComponent<EnemySpawning>();
+        follow = GameObject.FindWithTag("Player").GetComponent<Transform>();
+
     }
      
 
@@ -31,14 +34,19 @@ public class ZombieMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (isChasing)
+        {
         agent.SetDestination(follow.position);
-        /* if (timer <= 0)
-         {
-             timer = 1;
-         }*/
+        }
+        
+    }
 
-        /*timer -= Time.deltaTime;*/
+    IEnumerator WaitAndStartChasing(float waitTime)
+    {
+        //wait for a specified amount of time
+        yield return new WaitForSeconds(waitTime);
 
-        //timer -= Time.DeltaTime is similar to writing timer = timer - Time.deltaTime
+        //start chasing
+        isChasing = true;
     }
 }

@@ -6,6 +6,7 @@ public class ZombieHealth : MonoBehaviour
 {
     public int maxHealth;
     public int currentHealth;
+    private EnemySpawning spawning;
 
     bool zombieDead;
     Animator animator;
@@ -16,6 +17,7 @@ public class ZombieHealth : MonoBehaviour
         zombieDead = false;
         maxHealth = currentHealth;
         animator = GetComponent<Animator>();
+        spawning = (EnemySpawning)FindObjectOfType(typeof(EnemySpawning));
     }
 
     private void TargetDestroy ()
@@ -23,6 +25,8 @@ public class ZombieHealth : MonoBehaviour
         if (!zombieDead)
         {
 
+        spawning.ZombieCount--;
+        StartCoroutine(spawning.ZombieDrop());
         zombieDead = true;
         Debug.Log("Zombie dead");
         gameObject.SetActive(false);

@@ -7,7 +7,7 @@ public class EnemySpawning : MonoBehaviour
 {
     public GameObject Zombie1;
     public Transform player; // Reference to the player's transform.
-    private int ZombieCount;
+    public int ZombieCount;
     public int TotalZombies;
 
     // Start is called before the first frame update
@@ -16,7 +16,7 @@ public class EnemySpawning : MonoBehaviour
         StartCoroutine(ZombieDrop());
     }
 
-    IEnumerator ZombieDrop()
+    public IEnumerator ZombieDrop()
     {
         ZombieCount = 0;
         while (ZombieCount < TotalZombies)
@@ -27,13 +27,13 @@ public class EnemySpawning : MonoBehaviour
 
             // Set the destination of the NavMeshAgent to the player's position.
             NavMeshAgent zombieAgent = newZombie.GetComponent<NavMeshAgent>();
-            if (zombieAgent != null)
+            if (zombieAgent != null && zombieAgent.isActiveAndEnabled)
             {
                 zombieAgent.SetDestination(player.position);
+                Debug.Log("Enemies Generated");
             }
 
             yield return new WaitForSeconds(0.1f);
-            Debug.Log("Enemies Generated");
         }
     }
 
@@ -45,7 +45,7 @@ public class EnemySpawning : MonoBehaviour
         // Generate a random point within the NavMesh bounds.
         do
         {
-            randomPosition = new Vector3(UnityEngine.Random.Range(10, 5), 0.5f, UnityEngine.Random.Range(6, 10));
+            randomPosition = new Vector3(UnityEngine.Random.Range(10, 5), UnityEngine.Random.Range( 0, 0.9f), UnityEngine.Random.Range(6, 10));
         } while (!NavMesh.SamplePosition(randomPosition, out hit, 1.0f, NavMesh.AllAreas));
 
         return hit.position;

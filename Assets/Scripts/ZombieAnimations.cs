@@ -15,7 +15,8 @@ public class ZombieAnimations : MonoBehaviour
     {
 
         animator = GetComponent<Animator>();
-        
+        player = GameObject.FindWithTag("Player").GetComponent<Transform>();
+
     }
 
  
