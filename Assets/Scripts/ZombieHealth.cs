@@ -7,8 +7,9 @@ public class ZombieHealth : MonoBehaviour
     public int maxHealth;
     public int currentHealth;
     private EnemySpawning spawning;
+    private HighScores highScores;
 
-    bool zombieDead;
+    public bool zombieDead;
     Animator animator;
     AudioSource audioSource;
     // Start is called before the first frame update
@@ -18,6 +19,7 @@ public class ZombieHealth : MonoBehaviour
         maxHealth = currentHealth;
         animator = GetComponent<Animator>();
         spawning = (EnemySpawning)FindObjectOfType(typeof(EnemySpawning));
+        highScores = (HighScores)FindObjectOfType(typeof(HighScores));
     }
 
     private void TargetDestroy ()
@@ -28,6 +30,7 @@ public class ZombieHealth : MonoBehaviour
         spawning.ZombieCount--;
         StartCoroutine(spawning.ZombieDrop());
         zombieDead = true;
+        highScores.UpdateAndSaveScore(highScores.scores.Length - 1, highScores.scores[highScores.scores.Length - 1] + 1);
         Debug.Log("Zombie dead");
         gameObject.SetActive(false);
         animator.SetTrigger("Die");

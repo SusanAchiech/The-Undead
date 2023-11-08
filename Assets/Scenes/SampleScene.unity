@@ -314,7 +314,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &174138662
 RectTransform:
   m_ObjectHideFlags: 0
@@ -348,7 +348,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -583,6 +583,12 @@ Transform:
   m_Father: {fileID: 1565678729}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &398119940 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1095140056280183736, guid: fbef1fdd9bf343f4baf7650cb7e53d58,
+    type: 3}
+  m_PrefabInstance: {fileID: 3562118179316788487}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &483037434 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2751027687307977091, guid: 19eadcf8fbed56b4da77ca94c1b4145f,
@@ -1165,6 +1171,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2751027687307977091, guid: 19eadcf8fbed56b4da77ca94c1b4145f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2795493999401270507, guid: 19eadcf8fbed56b4da77ca94c1b4145f,
         type: 3}
@@ -2520,6 +2531,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1595589707}
   - component: {fileID: 1595589708}
+  - component: {fileID: 1595589709}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -2555,11 +2567,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Player:
-  - {fileID: 0}
+  - {fileID: 483037434}
   m_Enemy:
-  - {fileID: 0}
+  - {fileID: 398119940}
+  - {fileID: 1095140056280183736, guid: fbef1fdd9bf343f4baf7650cb7e53d58, type: 3}
+  zombieDead: 0
+  PlayerDead: 0
+  MessageText: {fileID: 174138663}
   NewGameButton: {fileID: 1685251764}
   HighScoresButton: {fileID: 849200967}
+--- !u!114 &1595589709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1595589706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7c6598b0486a474aa365d8ad118e493, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scores: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
 --- !u!1 &1685251762
 GameObject:
   m_ObjectHideFlags: 0
@@ -2829,6 +2858,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerMaxHealth: 100
   PlayerCurrentHealth: 100
+  PlayerDead: 0
 --- !u!1 &1913289277
 GameObject:
   m_ObjectHideFlags: 0
@@ -9198,7 +9228,7 @@ PrefabInstance:
     - target: {fileID: 4137086002738446763, guid: fbef1fdd9bf343f4baf7650cb7e53d58,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.019
+      value: 1.001
       objectReference: {fileID: 0}
     - target: {fileID: 4137086002738446763, guid: fbef1fdd9bf343f4baf7650cb7e53d58,
         type: 3}

@@ -6,7 +6,7 @@ public class PlayerHealth : MonoBehaviour
 {
     public int PlayerMaxHealth;
     public int PlayerCurrentHealth;
-    bool PlayerDead;
+    public bool PlayerDead;
     Animator animator;
 
     // Start is called before the first frame update
@@ -22,9 +22,10 @@ public class PlayerHealth : MonoBehaviour
         if (!PlayerDead)
         {
 
-        PlayerDead = true;
-        Debug.Log("Player dead");
-        gameObject.SetActive(false);
+            PlayerDead = true;
+            
+            Debug.Log("Player dead");
+            gameObject.SetActive(false);
         }
 
     }
