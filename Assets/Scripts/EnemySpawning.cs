@@ -9,10 +9,12 @@ public class EnemySpawning : MonoBehaviour
     public Transform player; // Reference to the player's transform.
     public int ZombieCount;
     public int TotalZombies;
+    private GameManager gamemanager;
 
     // Start is called before the first frame update
     void Start()
     {
+        gamemanager = (GameManager)FindObjectOfType(typeof(GameManager));
         StartCoroutine(ZombieDrop());
     }
 
@@ -24,6 +26,7 @@ public class EnemySpawning : MonoBehaviour
             ZombieCount += 1;
             Vector3 randomPosition = GetRandomNavMeshPosition();
             GameObject newZombie = Instantiate(Zombie1, randomPosition, Quaternion.identity);
+            gamemanager.m_Enemy.Add(newZombie);
 
             // Set the destination of the NavMeshAgent to the player's position.
             NavMeshAgent zombieAgent = newZombie.GetComponent<NavMeshAgent>();

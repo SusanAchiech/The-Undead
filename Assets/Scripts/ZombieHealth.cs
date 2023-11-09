@@ -10,6 +10,7 @@ public class ZombieHealth : MonoBehaviour
     private HighScores highScores;
 
     public bool zombieDead;
+    private GameManager gamemanager;
     Animator animator;
     AudioSource audioSource;
     // Start is called before the first frame update
@@ -19,6 +20,7 @@ public class ZombieHealth : MonoBehaviour
         maxHealth = currentHealth;
         animator = GetComponent<Animator>();
         spawning = (EnemySpawning)FindObjectOfType(typeof(EnemySpawning));
+        gamemanager = (GameManager)FindObjectOfType(typeof(GameManager));
         highScores = (HighScores)FindObjectOfType(typeof(HighScores));
     }
 
@@ -30,6 +32,8 @@ public class ZombieHealth : MonoBehaviour
         spawning.ZombieCount--;
         StartCoroutine(spawning.ZombieDrop());
         zombieDead = true;
+        gamemanager.zombieDead = true;
+        gamemanager.totalEnemiesKilled++;
         highScores.UpdateAndSaveScore(highScores.scores.Length - 1, highScores.scores[highScores.scores.Length - 1] + 1);
         Debug.Log("Zombie dead");
         gameObject.SetActive(false);

@@ -8,6 +8,7 @@ public class PlayerHealth : MonoBehaviour
     public int PlayerCurrentHealth;
     public bool PlayerDead;
     Animator animator;
+    private GameManager gamemanager;
 
     // Start is called before the first frame update
     void Start()
@@ -15,6 +16,7 @@ public class PlayerHealth : MonoBehaviour
         PlayerDead = false;
         PlayerCurrentHealth = PlayerMaxHealth;
         animator = GetComponent<Animator>();
+        gamemanager = (GameManager)FindObjectOfType(typeof(GameManager));
     }
 
     private void PlayerDestroy()
@@ -25,6 +27,7 @@ public class PlayerHealth : MonoBehaviour
             PlayerDead = true;
             
             Debug.Log("Player dead");
+            gamemanager.PlayerDead = true;
             gameObject.SetActive(false);
         }
 

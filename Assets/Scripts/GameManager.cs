@@ -1,14 +1,15 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     public GameObject[] m_Player;
-    public GameObject[] m_Enemy;
+    public List<GameObject>m_Enemy = new List<GameObject>();
     public bool zombieDead;
     public bool PlayerDead;
-
+    public int totalEnemiesKilled = 0;
     public enum GameState
     {
         Start,
@@ -29,16 +30,19 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private HighScores highScores;
+
     public void Awake()
     {
         m_GameState = GameState.Start;
+        highScores = GetComponent<HighScores>(); 
     }
 
     // Start is called before the first frame update
     void Start()
     {
         // Deactivate enemy
-        for (int i = 0; i < m_Enemy.Length; i++)
+        for (int i = 0; i < m_Enemy.Count; i++)
         {
             m_Enemy[i].SetActive(false);
         }
@@ -51,6 +55,7 @@ public class GameManager : MonoBehaviour
         MessageText.text = "Press Enter to Start";
     }
 
+
     // Update is called once per frame
     void Update()
     {
@@ -62,19 +67,26 @@ public class GameManager : MonoBehaviour
                     MessageText.text = "";
                     m_GameState = GameState.Playing;
                     // Activate player and enemy
-                    for (int i = 0; i < m_Enemy.Length; i++)
+                    for (int i = 0; i < m_Enemy.Count; i++)
                     {
                         m_Enemy[i].SetActive(true);
-
                     }
                 }
                 break;
             case GameState.Playing:
                 bool isGameOver = false;
 
-                if (zombieDead || PlayerDead)
+                if ( PlayerDead)
                 {
                     isGameOver = true;
+                }
+
+                if (totalEnemiesKilled >= 20)
+                {
+                    MessageText.text = "You Win!";
+                    isGameOver = true;
+                    // Deactivating player and enemy
+                    SetPlayerAndEnemyActive(false);
                 }
 
                 if (isGameOver)
@@ -86,12 +98,7 @@ public class GameManager : MonoBehaviour
                     if (PlayerDead)
                     {
                         MessageText.text = "Game Over";
-                        SetPlayerAndEnemyActive(false); // Deactivate player and enemy
-                    }
-                    else
-                    {
-                        MessageText.text = "You Win!";
-                        // Handle the win condition
+                        SetPlayerAndEnemyActive(false); 
                     }
                 }
                 break;
@@ -100,7 +107,10 @@ public class GameManager : MonoBehaviour
                 {
                     m_GameState = GameState.Playing;
                     MessageText.text = "You Lose, Game Over!";
-                    SetPlayerAndEnemyActive(false); // Activate player and enemy
+                    Debug.Log("Game over");
+                    SetPlayerAndEnemyActive(false); 
+                    HighScoresButton.gameObject.SetActive(true);
+                    NewGameButton.gameObject.SetActive(true);
                 }
                 break;
         }
@@ -122,6 +132,7 @@ public class GameManager : MonoBehaviour
 
     private void SetPlayerAndEnemyActive(bool isActive)
     {
+        Debug.Log("Both player and enemy are active");
         foreach (var player in m_Player)
         {
             player.SetActive(isActive);
@@ -131,5 +142,18 @@ public class GameManager : MonoBehaviour
         {
             enemy.SetActive(isActive);
         }
+    }
+
+    public void OnHighScores()
+    {
+        MessageText.text = "";
+        HighScoresButton.gameObject.SetActive(true);
+        string text = "";
+        for (int i = 0; i < highScores.scores.Length; i++) // Access scores through the instance
+        {
+            int seconds = highScores.scores[i];
+            text += string.Format("{0:D2}:{1:D2}\n", (seconds / 60), (seconds % 60));
+        }
+        
     }
 }
