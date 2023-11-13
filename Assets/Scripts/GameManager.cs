@@ -17,6 +17,9 @@ public class GameManager : MonoBehaviour
         GameOver
     };
 
+    public GameObject m_P_LPSP_UI_Canvas;
+    public GameObject m_HighScorePanel;
+    public Text m_HighScoresText;
     public Text MessageText;
     public Button NewGameButton;
     public Button HighScoresButton;
@@ -50,6 +53,8 @@ public class GameManager : MonoBehaviour
         {
             m_Player[i].SetActive(true);
         }
+        m_P_LPSP_UI_Canvas.gameObject.SetActive(false);
+        m_HighScorePanel.gameObject.SetActive(false);
         HighScoresButton.gameObject.SetActive(false);
         NewGameButton.gameObject.SetActive(false);
         MessageText.text = "Press Enter to Start";
@@ -66,11 +71,12 @@ public class GameManager : MonoBehaviour
                 {
                     MessageText.text = "";
                     m_GameState = GameState.Playing;
-                    // Activate player and enemy
+                    // Activate enemy
                     for (int i = 0; i < m_Enemy.Count; i++)
                     {
                         m_Enemy[i].SetActive(true);
                     }
+                    m_P_LPSP_UI_Canvas.gameObject.SetActive(true);
                 }
                 break;
             case GameState.Playing:
@@ -92,13 +98,14 @@ public class GameManager : MonoBehaviour
                 if (isGameOver)
                 {
                     m_GameState = GameState.GameOver;
-                    NewGameButton.gameObject.SetActive(true);
-                    HighScoresButton.gameObject.SetActive(true);
 
                     if (PlayerDead)
                     {
                         MessageText.text = "Game Over";
+                        m_P_LPSP_UI_Canvas.gameObject.SetActive(false);
                         SetPlayerAndEnemyActive(false); 
+                        NewGameButton.gameObject.SetActive(true);
+                        HighScoresButton.gameObject.SetActive(true);
                     }
                 }
                 break;
@@ -123,6 +130,8 @@ public class GameManager : MonoBehaviour
 
     public void OnNewGame()
     {
+        m_P_LPSP_UI_Canvas.gameObject.SetActive(true);
+        m_HighScorePanel.SetActive(false);
         m_GameState = GameState.Playing;
         MessageText.gameObject.SetActive(false);
         NewGameButton.gameObject.SetActive(false);
@@ -147,13 +156,16 @@ public class GameManager : MonoBehaviour
     public void OnHighScores()
     {
         MessageText.text = "";
-        HighScoresButton.gameObject.SetActive(true);
+        m_P_LPSP_UI_Canvas.gameObject.SetActive(false);
+        HighScoresButton.gameObject.SetActive(false);
+        m_HighScorePanel.SetActive(true);
         string text = "";
         for (int i = 0; i < highScores.scores.Length; i++) // Access scores through the instance
         {
             int seconds = highScores.scores[i];
             text += string.Format("{0:D2}:{1:D2}\n", (seconds / 60), (seconds % 60));
         }
-        
+        m_HighScoresText.text = text;
+
     }
 }

@@ -18,6 +18,7 @@ TagManager:
   - Wood
   - Enemy
   - Bullet
+  - Canvas
   layers:
   - Default
   - TransparentFX

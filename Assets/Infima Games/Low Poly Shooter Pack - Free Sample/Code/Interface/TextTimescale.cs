@@ -1,22 +1,43 @@
-﻿// Copyright 2021, Infima Games. All Rights Reserved.
-
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace InfimaGames.LowPolyShooterPack.Interface
 {
-    /// <summary>
-    /// Component that changes a text to match the current time scale.
-    /// </summary>
     public class TextTimescale : ElementText
     {
-        #region METHODS
+        private PlayerHealth playerHealth;
+        private GameManager gameManager;
+
+        void Start()
+        {
+            playerHealth = FindObjectOfType<PlayerHealth>(); // Find the PlayerHealth script
+            gameManager = FindObjectOfType<GameManager>();
+        }
 
         protected override void Tick()
         {
-            //Change text to match the time scale!
-            textMesh.text = "Timescale : " + Time.timeScale;
-        }        
+            if (playerHealth != null)
+            {
+                textMesh.text = "Player Health: " + playerHealth.PlayerCurrentHealth;
+            }
+        }
 
-        #endregion
+        // OnCollisionEnter is triggered when a collision happens
+        private void OnCollisionEnter(Collision collision)
+        {
+            if (collision.gameObject.CompareTag("Enemy") && playerHealth != null)
+            {
+                playerHealth.TakeDamage(10); // Reduce player health by 10 when colliding with an enemy
+
+                if (playerHealth.PlayerCurrentHealth <= 0)
+                {
+                    gameManager.PlayerDead = true;
+                    textMesh.text = "Player Health: 0 (Player Dead)";
+                }
+                else
+                {
+                    textMesh.text = "Player Health: " + playerHealth.PlayerCurrentHealth;
+                }
+            }
+        }
     }
 }

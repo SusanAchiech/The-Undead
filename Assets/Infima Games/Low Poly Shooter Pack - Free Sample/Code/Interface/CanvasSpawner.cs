@@ -12,7 +12,7 @@ namespace InfimaGames.LowPolyShooterPack.Interface
         #region FIELDS SERIALIZED
 
         [Header("Settings")]
-        
+
         [Tooltip("Canvas prefab spawned at start. Displays the player's user interface.")]
         [SerializeField]
         private GameObject canvasPrefab;
