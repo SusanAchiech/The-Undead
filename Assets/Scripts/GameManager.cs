@@ -130,7 +130,7 @@ public class GameManager : MonoBehaviour
 
     public void OnNewGame()
     {
-        m_P_LPSP_UI_Canvas.gameObject.SetActive(true);
+       // m_P_LPSP_UI_Canvas.gameObject.SetActive(true);
         m_HighScorePanel.SetActive(false);
         m_GameState = GameState.Playing;
         MessageText.gameObject.SetActive(false);
@@ -156,7 +156,7 @@ public class GameManager : MonoBehaviour
     public void OnHighScores()
     {
         MessageText.text = "";
-        m_P_LPSP_UI_Canvas.gameObject.SetActive(false);
+        //m_P_LPSP_UI_Canvas.gameObject.SetActive(false);
         HighScoresButton.gameObject.SetActive(false);
         m_HighScorePanel.SetActive(true);
         string text = "";
