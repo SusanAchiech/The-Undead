@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -55,6 +56,8 @@ public class GameManager : MonoBehaviour
         }
         m_P_LPSP_UI_Canvas.gameObject.SetActive(false);
         m_HighScorePanel.gameObject.SetActive(false);
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
         HighScoresButton.gameObject.SetActive(false);
         NewGameButton.gameObject.SetActive(false);
         MessageText.text = "Press Enter to Start";
@@ -93,6 +96,10 @@ public class GameManager : MonoBehaviour
                     isGameOver = true;
                     // Deactivating player and enemy
                     SetPlayerAndEnemyActive(false);
+                    Cursor.visible = true;
+                    Cursor.lockState = CursorLockMode.None;
+                    NewGameButton.gameObject.SetActive(true);
+                    HighScoresButton.gameObject.SetActive(true);
                 }
 
                 if (isGameOver)
@@ -103,8 +110,10 @@ public class GameManager : MonoBehaviour
                     {
                         MessageText.text = "Game Over";
                         m_P_LPSP_UI_Canvas.gameObject.SetActive(false);
-                        SetPlayerAndEnemyActive(false); 
+                        SetPlayerAndEnemyActive(false);
+                        Cursor.visible = true;
                         NewGameButton.gameObject.SetActive(true);
+                        Cursor.lockState = CursorLockMode.None;
                         HighScoresButton.gameObject.SetActive(true);
                     }
                 }
@@ -115,7 +124,9 @@ public class GameManager : MonoBehaviour
                     m_GameState = GameState.Playing;
                     MessageText.text = "You Lose, Game Over!";
                     Debug.Log("Game over");
-                    SetPlayerAndEnemyActive(false); 
+                    SetPlayerAndEnemyActive(false);
+                    Cursor.visible = true;
+                    Cursor.lockState = CursorLockMode.None;
                     HighScoresButton.gameObject.SetActive(true);
                     NewGameButton.gameObject.SetActive(true);
                 }
@@ -130,13 +141,17 @@ public class GameManager : MonoBehaviour
 
     public void OnNewGame()
     {
+        Debug.Log("The button is functioning");
        // m_P_LPSP_UI_Canvas.gameObject.SetActive(true);
         m_HighScorePanel.SetActive(false);
         m_GameState = GameState.Playing;
         MessageText.gameObject.SetActive(false);
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
         NewGameButton.gameObject.SetActive(false);
         HighScoresButton.gameObject.SetActive(false);
         SetPlayerAndEnemyActive(true); // Activate player and enemy
+        SceneManager.LoadScene(0);
     }
 
     private void SetPlayerAndEnemyActive(bool isActive)
